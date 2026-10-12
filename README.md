@@ -26,7 +26,11 @@ Two repos live side by side in `Documents`: **genai-course-work** (yours — you
 | 8 | Clone this course repo alongside | `cd ~\Documents` · `git clone https://github.com/byruajit/genai-agents-course.git` · `cd genai-agents-course` · `type .gitignore` · `git pull` |
 | 9 | **Checkpoint** | Your GitHub page shows ≥ 2 commits and the merge; `git config --global --list` shows your name and email |
 
+<<<<<<< HEAD
 Start every session with `git pull` in this repo.
+=======
+Start every session with `git pull` in this repo. If it refuses because you saved a notebook, see [UPDATING.md](UPDATING.md) (or run `uv run python tools/update_course.py`).
+>>>>>>> upstream/main
 
 **Secrets:** `.env` is in `.gitignore`, so `git add` ignores it. If a key ever reaches a commit it is public within minutes — revoke it in the Groq console and create a new one.
 
@@ -80,6 +84,21 @@ You create your own free Groq key at console.groq.com. It lives in `.env` and no
 - Baseline quiz: _(added by instructor)_
 - Fix videos: _(coming)_
 
+<<<<<<< HEAD
+=======
+## Session 9a — your environment and your first LLM call, explained
+
+```powershell
+git pull
+uv sync
+uv run jupyter lab module01/s09a_first_call.ipynb
+uv run pytest tests/test_s09a.py         # offline check of the notebook
+```
+A guided notebook for Session 2's setup and `hello.py`: the two repositories, `uv`, `.env`, and the first call rebuilt cell by cell (whole reply, then streamed, then the token count). Runs without a key: model cells say "skipped".
+
+**All notebooks from Session 9a to 16 now have long explanations** (Part A: why, the words you need, how the session is built; six steps per section; Part C: summary, interview questions, troubleshooting). If `git pull` complains that your local changes would be overwritten, follow [UPDATING.md](UPDATING.md).
+
+>>>>>>> upstream/main
 ## Session 9b — tokens, cost, context, embeddings
 
 ```powershell
@@ -152,12 +171,61 @@ uv run pytest showcase/a3_healthcare/test_a3_healthcare.py
 Safety rule -> intent router -> slot filling -> booking -> confirmation. The model reads; the code decides.
 See `showcase/a3_healthcare/README.md`.
 
+<<<<<<< HEAD
 ## Layout
 ```
 module01/                   Session 9b notebook, helpers, pre-read
 hello.py                    Session 2 first call
 list_models.py              which models your key can use
 tests/test_setup.py         Session 2 checkpoint
+=======
+## Session 14 — prompt anatomy (Module 2 begins) and your own work repository
+
+```powershell
+git pull
+uv sync                                  # no new packages
+uv run jupyter lab module02/s14_prompt_anatomy.ipynb
+uv run pytest tests/test_s14.py          # checkpoint (offline-safe)
+```
+Pre-read: `module02/reading_prompt_anatomy.md`. **Before class:** read `module02/work_repo_steps.md` and have your GitHub username ready.
+Terms: `module02/terms_s14.md`. Your submission is a pushed `prompts/library.md` in **your own** `genai-course-work` repository, not this one.
+
+## Session 15 — reasoning prompts: when thinking helps, and what it costs
+
+```powershell
+git pull
+uv sync                                  # no new packages
+uv run jupyter lab module02/s15_reasoning.ipynb
+uv run pytest tests/test_s15.py          # checkpoint (offline-safe)
+```
+Pre-read: `module02/reading_reasoning.md` (10 minutes). Terms: `module02/terms_s15.md`. A loan-eligibility checker for ten applicants, asked four ways
+(plain, step by step, step back, vote), with tokens, seconds and cost per 1,000 questions. **Budget:** about 40,000-80,000 tokens of a free key's
+200,000-a-day limit; answers are remembered on disk (`~/.genai_course/`), so re-running a cell is free. Your submission is `experiments/s15_accuracy_table.md`
+and version-2 entries in `prompts/library.md`, both pushed to **your own** `genai-course-work` repository.
+
+## Session 16 — structured prompting: tags, templates, and a system prompt in a file
+
+```powershell
+git pull
+uv sync                                  # no new packages (Jinja2 already comes with Jupyter)
+uv run jupyter lab module02/s16_structured.ipynb
+$env:WORK_REPO = "$HOME\Documents\genai-course-work"
+uv run pytest tests/test_s16.py -rs      # checkpoint: your classifier needs 16/20 on the held-out set
+```
+Pre-read: `module02/reading_structured.md` (10 minutes). Terms: `module02/terms_s16.md`. The customer-support classifier (card, loan, account, other): customer text inside
+`<ticket>` tags, a Jinja template with variables, and the system prompt as a file loaded at runtime. **Budget:** about 40,000-70,000 tokens of a free key's
+200,000-a-day limit; answers are remembered on disk (`~/.genai_course/`), so re-running an unchanged cell is free. Your submission is `prompts/support_classifier/system.md`,
+`prompts/support_classifier/user.j2` and `experiments/s16_heldout.md`, pushed to **your own** `genai-course-work` repository. The checkpoint test is skipped without a key
+(read the reason with `-rs`: a skip is not a pass) and fails on purpose with a key but no `WORK_REPO`.
+
+## Layout
+```
+module01/                   Sessions 9a-13 notebooks, helpers, pre-reads
+hello.py                    Session 2 first call
+list_models.py              which models your key can use
+tests/test_setup.py         Session 2 checkpoint
+tests/test_s09a.py          Session 9a notebook check (offline)
+>>>>>>> upstream/main
 tests/test_s09.py           Session 9b checkpoint
 tests/test_s10.py           Session 10 checkpoint
 showcase/a2_insurance/      Showcase A2 (Insurance workflow) + its own tests
@@ -165,7 +233,17 @@ showcase/a3_healthcare/     Showcase A3 (Healthcare workflow) + its own tests
 tests/test_s11.py           Session 11 checkpoint
 tests/test_s12.py           Session 12 checkpoint
 tests/test_s13.py           Session 13 checkpoint
+<<<<<<< HEAD
 cheatsheet/python-for-agents.md
+=======
+tests/test_s14.py           Session 14 checkpoint
+tests/test_s15.py           Session 15 checkpoint
+tests/test_s16.py           Session 16 checkpoint
+module02/                   Module 2 (prompt engineering): S14-S16 notebooks, helpers, work-repo steps
+cheatsheet/python-for-agents.md
+tools/update_course.py      safe update: back up your edited notebooks, then git pull
+UPDATING.md                 how to update when git pull refuses
+>>>>>>> upstream/main
 .env.example                copy to .env
 pyproject.toml              pinned dependencies (uv sync)
 ```
