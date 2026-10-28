@@ -61,34 +61,23 @@ def find_vision_model(client, preferred=VISION_PREFERENCES) -> Optional[str]:
     return None
 
 
-<<<<<<< HEAD
-=======
 # One shared prompt: read_image_text() sends it, and the notebook's cost comparison sends the SAME words
 # without the picture - so the difference in prompt tokens is the picture, not a changed instruction.
 TRANSCRIBE_PROMPT = ("Transcribe every piece of text visible in this image, one line per field, exactly as printed. "
                      "Do not interpret or reformat anything.")
 
 
->>>>>>> upstream/main
 def read_image_text(client, model: str, image_path: str | Path, max_tokens: int = 400) -> dict:
     """Ask a vision model to transcribe the text it can see. Returns text plus usage, so the
     cost of an image is visible: compare prompt_tokens with a text-only call."""
     r = client.chat.completions.create(
         model=model, max_tokens=max_tokens, temperature=0,
-<<<<<<< HEAD
-        messages=vision_messages(
-            "Transcribe every piece of text visible in this image, one line per field, exactly as printed. "
-            "Do not interpret or reformat anything.", image_path),
-=======
         messages=vision_messages(TRANSCRIBE_PROMPT, image_path),
->>>>>>> upstream/main
     )
     return {"text": r.choices[0].message.content, "prompt_tokens": r.usage.prompt_tokens,
             "completion_tokens": r.usage.completion_tokens}
 
 
-<<<<<<< HEAD
-=======
 def _norm(text: str) -> str:
     """Upper-case and keep only letters and digits, so spacing, case and punctuation do not matter."""
     return re.sub(r"[^A-Z0-9]", "", text.upper())
@@ -108,7 +97,6 @@ def compare_to_truth(read_text: str, truth_text: str) -> list[tuple[str, bool]]:
     return out
 
 
->>>>>>> upstream/main
 def sample_transcript(doc_stem: str) -> str:
     """The text a good vision model should return for a sample image - the offline fallback."""
     return (SAMPLE_DIR / f"{doc_stem}.txt").read_text(encoding="utf-8")
